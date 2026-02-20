@@ -1,4 +1,4 @@
-const CACHE_NAME = 'broll-v1';
+const CACHE_NAME = 'broll-v3';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
