@@ -2,19 +2,19 @@
   "name": "Shoot Day B-Roll Companion",
   "short_name": "Shoot Day",
   "description": "Plan shots, get timed reminders, walk away with weeks of content.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#1A3A2F",
   "theme_color": "#1A3A2F",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/icon-192.svg",
+      "src": "./icon-192.svg",
       "sizes": "192x192",
       "type": "image/svg+xml"
     },
     {
-      "src": "/icon-512.svg",
+      "src": "./icon-512.svg",
       "sizes": "512x512",
       "type": "image/svg+xml"
     }
