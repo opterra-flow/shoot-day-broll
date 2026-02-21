@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { PILLARS } from "./data/pillars";
 import { saveSession, loadSession, clearSession } from "./utils/storage";
+import { playDing } from "./utils/audio";
 import { QuoteView } from "./views/QuoteView";
 import { HomeView } from "./views/HomeView";
 import { PlanView } from "./views/PlanView";
@@ -145,8 +146,14 @@ export default function ShootDayApp() {
   };
 
   const handleStartShoot = () => {
+    playDing();
     setView("shoot");
     setIsRunning(true);
+  };
+
+  const handleFinishEarly = () => {
+    setIsRunning(false);
+    setView("checklist");
   };
 
   switch (view) {
@@ -196,6 +203,7 @@ export default function ShootDayApp() {
           handleSkipPillar={handleSkipPillar}
           isLastUncompleted={isLastUncompleted}
           onSetActivePillar={setActivePillarIndex}
+          onFinishEarly={handleFinishEarly}
           resetAll={resetAll}
           onNavigate={setView}
         />

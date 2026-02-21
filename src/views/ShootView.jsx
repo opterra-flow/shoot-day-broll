@@ -13,7 +13,7 @@ export function ShootView({
   showConfetti, confettiDone,
   handleCheckShot, handleCompletePillar,
   handleSkipPillar, isLastUncompleted,
-  onSetActivePillar, resetAll, onNavigate,
+  onSetActivePillar, onFinishEarly, resetAll, onNavigate,
 }) {
   const currentPillar = PILLARS[activePillarIndex];
   const currentChecked = checkedShots[currentPillar?.id] || [];
@@ -191,6 +191,20 @@ export function ShootView({
               );
             })}
           </div>
+        )}
+
+        {/* Done — finish early */}
+        {!allDone && (
+          <button
+            onClick={onFinishEarly}
+            style={{
+              width: "100%", marginTop: 24, padding: "14px",
+              background: "transparent",
+              border: "1.5px dashed #ccc", borderRadius: 12,
+              color: "#999", fontWeight: 700, fontSize: "0.85rem",
+              cursor: "pointer", transition: "all 0.2s",
+            }}
+          >Done — Finish Shoot Early</button>
         )}
 
       </div>
