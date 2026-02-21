@@ -10,7 +10,7 @@ export const WRAP_CHECKLIST = [
     category: "Files",
     items: [
       "Files labeled & organized",
-      "Selects marked or flagged",
+      "Organize each shoot by content type and date",
     ],
   },
   {

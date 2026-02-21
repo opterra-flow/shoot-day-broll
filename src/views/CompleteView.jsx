@@ -68,14 +68,6 @@ export function CompleteView({ elapsed, pillarTimers, notes, selectedHooks, show
           })}
         </div>
 
-        {/* Voice memo reminder */}
-        <div style={{
-          color: "#FFD54F", fontSize: "0.85rem", marginBottom: 24,
-          fontWeight: 600, fontStyle: "italic",
-        }}>
-          {"\u{1F399}\uFE0F"} Don't forget your 30-second voice memo before you leave.
-        </div>
-
         {/* Download storyboard */}
         <div style={{ marginBottom: 24 }}>
           <div style={{

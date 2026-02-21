@@ -1,5 +1,6 @@
 import { WRAP_CHECKLIST, WRAP_TOTAL } from "../data/wrapChecklist";
 import { TimerDisplay } from "../components/TimerDisplay";
+import { VoiceMemoRecorder } from "../components/VoiceMemoRecorder";
 
 export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, setWrapChecked, onComplete }) {
   const checkedCount = wrapChecked.length;
@@ -120,6 +121,11 @@ export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, s
             })}
           </div>
         ))}
+
+        {/* Voice memo */}
+        <div style={{ marginBottom: 20 }}>
+          <VoiceMemoRecorder />
+        </div>
 
         {/* Complete button */}
         <button
