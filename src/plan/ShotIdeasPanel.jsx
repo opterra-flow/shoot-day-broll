@@ -11,10 +11,19 @@ export function ShotIdeasPanel({ ideas, onSelect }) {
         onClick={() => setExpanded(!expanded)}
         style={{
           background: "none", border: "none", cursor: "pointer",
-          fontSize: "0.7rem", fontWeight: 700, color: "#C9A961",
+          fontSize: "0.75rem", fontWeight: 700, color: "#C9A961",
           textTransform: "uppercase", letterSpacing: "0.1em",
           display: "flex", alignItems: "center", gap: 6,
           padding: "10px 0",
+          transition: "color 0.2s, text-shadow 0.2s",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.color = "#D4E157";
+          e.currentTarget.style.textShadow = "0 0 6px #D4E157, 0 0 16px rgba(212,225,87,0.5)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.color = "#C9A961";
+          e.currentTarget.style.textShadow = "none";
         }}
       >
         {"\u{1F4A1}"} B-Roll Ideas

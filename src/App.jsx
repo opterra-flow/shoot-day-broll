@@ -11,7 +11,7 @@ import { CompleteView } from "./views/CompleteView";
 
 export default function ShootDayApp() {
   const saved = useRef(loadSession());
-  const hasSession = saved.current !== null;
+  const [hasSession, setHasSession] = useState(saved.current !== null);
 
   const [view, setView] = useState("quote");
   const [isRunning, setIsRunning] = useState(false);
@@ -116,6 +116,7 @@ export default function ShootDayApp() {
   const handleClearSession = () => {
     clearSession();
     saved.current = null;
+    setHasSession(false);
   };
 
   const handleStartShoot = () => {

@@ -15,21 +15,11 @@ export function HomeView({ onNavigate, setIsRunning, hasSession, onResumeSession
           fontSize: "1.8rem", fontWeight: 900, color: "#D4E157",
           margin: "0 0 4px", letterSpacing: "-0.02em",
         }}>SHOOT DAY</h1>
-        <h2
-          style={{
-            fontSize: "1.3rem", fontWeight: 700, color: "#A5D6A7",
-            margin: "0 0 32px", letterSpacing: "0.15em", textTransform: "uppercase",
-            cursor: "pointer", transition: "color 0.2s, text-shadow 0.2s",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = "#D4E157";
-            e.currentTarget.style.textShadow = "0 0 12px rgba(212,225,87,0.7), 0 0 24px rgba(212,225,87,0.4)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = "#A5D6A7";
-            e.currentTarget.style.textShadow = "none";
-          }}
-        >B-Roll Companion</h2>
+        <h2 style={{
+          fontSize: "1.3rem", fontWeight: 700, color: "#D4E157",
+          margin: "0 0 32px", letterSpacing: "0.15em", textTransform: "uppercase",
+          textShadow: "0 0 8px #D4E157, 0 0 20px #D4E157, 0 0 40px rgba(212,225,87,0.6), 0 0 80px rgba(212,225,87,0.3)",
+        }}>B-Roll Companion</h2>
 
         <p style={{
           color: "#C8E6C9", fontSize: "0.9rem", lineHeight: 1.6,
