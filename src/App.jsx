@@ -74,8 +74,11 @@ export default function ShootDayApp() {
           setView("checklist");
         }, 1500);
       } else {
-        const nextIndex = PILLARS.findIndex((p) => p.id === pillarId) + 1;
-        setTimeout(() => setActivePillarIndex(nextIndex), 400);
+        // Auto-advance to next uncompleted pillar as a convenience
+        const nextUncompleted = PILLARS.findIndex((p) => !next.includes(p.id));
+        if (nextUncompleted !== -1) {
+          setTimeout(() => setActivePillarIndex(nextUncompleted), 400);
+        }
       }
       return next;
     });
@@ -165,6 +168,7 @@ export default function ShootDayApp() {
           confettiDone={confettiDone}
           handleCheckShot={handleCheckShot}
           handleCompletePillar={handleCompletePillar}
+          onSetActivePillar={setActivePillarIndex}
           resetAll={resetAll}
           onNavigate={setView}
         />

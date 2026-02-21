@@ -12,7 +12,7 @@ export function ShootView({
   notes, setNotes, selectedHooks,
   showConfetti, confettiDone,
   handleCheckShot, handleCompletePillar,
-  resetAll, onNavigate,
+  onSetActivePillar, resetAll, onNavigate,
 }) {
   const currentPillar = PILLARS[activePillarIndex];
   const currentChecked = checkedShots[currentPillar?.id] || [];
@@ -83,16 +83,31 @@ export function ShootView({
           })}
         </div>
 
-        <div style={{ display: "flex", justifyContent: "center", gap: 6, marginTop: 8 }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 4, marginTop: 8 }}>
+          {activePillarIndex > 0 && (
+            <button
+              onClick={() => onSetActivePillar(activePillarIndex - 1)}
+              style={{
+                background: "none", border: "none", color: "#A5D6A7",
+                fontSize: "1rem", cursor: "pointer", padding: "2px 6px",
+                fontWeight: 700,
+              }}
+            >{"\u2039"}</button>
+          )}
           {PILLARS.map((p, i) => {
             const isDone = completedPillars.includes(p.id);
-            const isCurrent = i === activePillarIndex && !allDone;
+            const isCurrent = i === activePillarIndex;
             return (
-              <div key={p.id} style={{
-                display: "flex", alignItems: "center", gap: 4,
-                padding: "3px 10px", borderRadius: 20,
-                background: isCurrent ? `${p.color}30` : "transparent",
-              }}>
+              <button
+                key={p.id}
+                onClick={() => onSetActivePillar(i)}
+                style={{
+                  display: "flex", alignItems: "center", gap: 4,
+                  padding: "3px 10px", borderRadius: 20,
+                  background: isCurrent ? `${p.color}30` : "transparent",
+                  border: "none", cursor: "pointer",
+                }}
+              >
                 <div style={{
                   width: 8, height: 8, borderRadius: "50%",
                   background: isDone ? "#81C784" : isCurrent ? p.color : "#555",
@@ -102,15 +117,25 @@ export function ShootView({
                   fontSize: "0.6rem", fontWeight: 700, color: isDone ? "#81C784" : isCurrent ? p.color : "#555",
                   textTransform: "uppercase", letterSpacing: "0.08em",
                 }}>{p.name}</span>
-              </div>
+              </button>
             );
           })}
+          {activePillarIndex < PILLARS.length - 1 && (
+            <button
+              onClick={() => onSetActivePillar(activePillarIndex + 1)}
+              style={{
+                background: "none", border: "none", color: "#A5D6A7",
+                fontSize: "1rem", cursor: "pointer", padding: "2px 6px",
+                fontWeight: 700,
+              }}
+            >{"\u203A"}</button>
+          )}
         </div>
       </div>
 
       <div style={{ padding: "20px 16px", maxWidth: 500, margin: "0 auto" }}>
         {/* Storyboard recap */}
-        {!allDone && currentPillar && (
+        {currentPillar && (
           <StoryboardRecap
             notes={notes}
             selectedHooks={selectedHooks}
@@ -118,7 +143,7 @@ export function ShootView({
           />
         )}
 
-        {!allDone && currentPillar && (
+        {currentPillar && (
           <ActivePillarView
             pillar={currentPillar}
             checkedShots={currentChecked}
@@ -127,6 +152,7 @@ export function ShootView({
             setNotes={setNotes}
             onComplete={() => handleCompletePillar(currentPillar.id)}
             allChecked={currentChecked.length === currentPillar.shots.length}
+            isCompleted={completedPillars.includes(currentPillar.id)}
           />
         )}
 
@@ -136,14 +162,21 @@ export function ShootView({
               fontSize: "0.7rem", fontWeight: 700, color: "#999",
               textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8,
             }}>Completed</div>
-            {completedPillars.map((pid) => {
+            {completedPillars.filter((pid) => pid !== currentPillar?.id).map((pid) => {
               const p = PILLARS.find((x) => x.id === pid);
+              const idx = PILLARS.findIndex((x) => x.id === pid);
               return (
-                <div key={pid} style={{
-                  display: "flex", alignItems: "center", gap: 10,
-                  padding: "12px 16px", background: "#F5F5F5",
-                  borderRadius: 12, marginBottom: 6, opacity: 0.6,
-                }}>
+                <button
+                  key={pid}
+                  onClick={() => onSetActivePillar(idx)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 10,
+                    padding: "12px 16px", background: "#F5F5F5",
+                    borderRadius: 12, marginBottom: 6, opacity: 0.7,
+                    width: "100%", border: "none", cursor: "pointer",
+                    textAlign: "left",
+                  }}
+                >
                   <span>{p.emoji}</span>
                   <span style={{ fontWeight: 700, color: "#888", fontSize: "0.85rem" }}>{p.name}</span>
                   <span style={{
@@ -151,7 +184,7 @@ export function ShootView({
                     fontFamily: "'SF Mono', 'Fira Code', monospace",
                   }}>{formatTime(pillarTimers?.[p.id] || 0)}</span>
                   <span style={{ color: "#81C784", fontWeight: 700, fontSize: "0.8rem" }}>{"\u2713"}</span>
-                </div>
+                </button>
               );
             })}
           </div>
