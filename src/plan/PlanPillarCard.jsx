@@ -47,6 +47,48 @@ export function PlanPillarCard({ pillar, notes, setNotes, selectedHooks, onOpenH
               </div>
             ))}
           </div>
+          {/* Pillar-level hook */}
+          {selectedHooks?.[pillar.id] ? (
+            <div style={{
+              marginBottom: 16, padding: "10px 12px",
+              background: "#F9FBE7", borderRadius: 8,
+              border: "1px solid #F0F4C3",
+              display: "flex", alignItems: "flex-start", gap: 8,
+            }}>
+              <div style={{ flex: 1 }}>
+                <div style={{
+                  fontSize: "0.6rem", fontWeight: 700, textTransform: "uppercase",
+                  letterSpacing: "0.1em", color: "#9E9D24", marginBottom: 4,
+                }}>Hook</div>
+                <div style={{ fontSize: "0.82rem", color: "#333", lineHeight: 1.4 }}>{selectedHooks[pillar.id]}</div>
+              </div>
+              <button
+                onClick={() => onRemoveHook(pillar.id)}
+                style={{
+                  background: "none", border: "none", color: "#ccc",
+                  fontSize: "0.9rem", cursor: "pointer", padding: "0 4px",
+                  flexShrink: 0,
+                }}
+              >{"\u2715"}</button>
+            </div>
+          ) : (
+            <button
+              onClick={() => onOpenHookBank(pillar.id)}
+              style={{
+                marginBottom: 16, padding: "8px 14px",
+                background: "transparent",
+                border: "1.5px dashed #D4E157",
+                borderRadius: 8, cursor: "pointer",
+                fontSize: "0.78rem", fontWeight: 600,
+                color: "#9E9D24",
+                width: "100%",
+                transition: "background 0.15s",
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = "#F9FBE7"}
+              onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
+            >+ Add Hook</button>
+          )}
+
           <div style={{
             fontSize: "0.7rem", fontWeight: 800, textTransform: "uppercase",
             letterSpacing: "0.1em", color: "#1A3A2F", marginBottom: 10,
@@ -59,9 +101,6 @@ export function PlanPillarCard({ pillar, notes, setNotes, selectedHooks, onOpenH
               shotIndex={i}
               notes={notes}
               setNotes={setNotes}
-              selectedHook={selectedHooks?.[`${pillar.id}-${i}`] || null}
-              onSelectHook={() => onOpenHookBank(pillar.id, i)}
-              onRemoveHook={() => onRemoveHook(pillar.id, i)}
               shotIdeas={ideas}
             />
           ))}

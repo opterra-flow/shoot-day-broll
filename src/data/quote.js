@@ -1,1 +1,1 @@
-export const OPENING_QUOTE = "You are the creator; you get to create your destiny in this moment, and your mindset and the way you show up is what will take you through this. Take a deep breath \u2014 here you go.";
+export const OPENING_QUOTE = "You are the creator; you get to create your destiny in this moment, and your mindset and the way you show up is what will take you through this. Take a deep breath \u2014 here you\u00A0go.";

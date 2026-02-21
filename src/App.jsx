@@ -54,10 +54,12 @@ export default function ShootDayApp() {
   }, [isRunning, activePillarIndex]);
 
   const handleCheckShot = useCallback((pillarId, shotIndex) => {
-    playShutter();
     setCheckedShots((prev) => {
       const current = prev[pillarId] || [];
-      if (current.includes(shotIndex)) return prev;
+      if (current.includes(shotIndex)) {
+        return { ...prev, [pillarId]: current.filter((i) => i !== shotIndex) };
+      }
+      playShutter();
       return { ...prev, [pillarId]: [...current, shotIndex] };
     });
   }, []);

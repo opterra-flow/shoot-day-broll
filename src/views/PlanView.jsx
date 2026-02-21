@@ -6,26 +6,24 @@ import { DownloadButtons } from "../components/DownloadButtons";
 
 export function PlanView({ notes, setNotes, selectedHooks, setSelectedHooks, onNavigate, onStartShoot }) {
   const [hookModalOpen, setHookModalOpen] = useState(false);
-  const [hookTarget, setHookTarget] = useState(null); // { pillarId, shotIndex }
+  const [hookTarget, setHookTarget] = useState(null); // pillarId
 
-  const handleOpenHookBank = (pillarId, shotIndex) => {
-    setHookTarget({ pillarId, shotIndex });
+  const handleOpenHookBank = (pillarId) => {
+    setHookTarget(pillarId);
     setHookModalOpen(true);
   };
 
   const handleSelectHook = (hookText) => {
     if (!hookTarget) return;
-    const key = `${hookTarget.pillarId}-${hookTarget.shotIndex}`;
-    setSelectedHooks((prev) => ({ ...prev, [key]: hookText }));
+    setSelectedHooks((prev) => ({ ...prev, [hookTarget]: hookText }));
     setHookModalOpen(false);
     setHookTarget(null);
   };
 
-  const handleRemoveHook = (pillarId, shotIndex) => {
-    const key = `${pillarId}-${shotIndex}`;
+  const handleRemoveHook = (pillarId) => {
     setSelectedHooks((prev) => {
       const next = { ...prev };
-      delete next[key];
+      delete next[pillarId];
       return next;
     });
   };

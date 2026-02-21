@@ -1,7 +1,7 @@
 export function ShotCheckItem({ shot, checked, onCheck, index }) {
   return (
     <div
-      onClick={() => { if (!checked) onCheck(); }}
+      onClick={() => onCheck()}
       style={{
         display: "flex",
         alignItems: "center",
@@ -11,7 +11,7 @@ export function ShotCheckItem({ shot, checked, onCheck, index }) {
         borderRadius: 12,
         marginBottom: 8,
         border: checked ? "1.5px solid #81C784" : "1.5px solid #e0e0e0",
-        cursor: checked ? "default" : "pointer",
+        cursor: "pointer",
         transition: "all 0.2s",
         transform: checked ? "scale(0.98)" : "scale(1)",
       }}
