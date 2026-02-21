@@ -11,20 +11,23 @@ export const WRAP_CHECKLIST = [
     items: [
       "Files labeled & organized",
       "Organize each shoot by content type and date",
+      "Backup all files to a hard drive",
     ],
   },
   {
     category: "Gear",
     items: [
-      "Memory cards backed up",
+      "Memory cards cleared",
       "Batteries charged / packed",
       "All lenses accounted for",
+      "Pack up all tripods and props",
     ],
   },
   {
     category: "Wrap",
     items: [
       "Location cleaned up",
+      "Final walkthrough — make sure you didn't leave anything",
       "Client / crew goodbyes done",
     ],
   },

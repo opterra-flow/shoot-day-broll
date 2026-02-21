@@ -1,7 +1,74 @@
+function playCameraClick() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const duration = 0.08;
+
+    // Sharp click noise burst
+    const bufferSize = ctx.sampleRate * duration;
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      const t = i / bufferSize;
+      // Shaped noise that decays fast — sounds like a shutter snap
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, 8);
+    }
+
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    // Bandpass to make it sound more mechanical/clicky
+    const filter = ctx.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.frequency.value = 3000;
+    filter.Q.value = 1.5;
+
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.6, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+    noise.start();
+    noise.stop(ctx.currentTime + duration);
+
+    // Second click for the "mirror slap" feel
+    setTimeout(() => {
+      const buf2 = ctx.createBuffer(1, ctx.sampleRate * 0.04, ctx.sampleRate);
+      const d2 = buf2.getChannelData(0);
+      for (let i = 0; i < d2.length; i++) {
+        const t = i / d2.length;
+        d2[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, 12);
+      }
+      const n2 = ctx.createBufferSource();
+      n2.buffer = buf2;
+      const f2 = ctx.createBiquadFilter();
+      f2.type = "bandpass";
+      f2.frequency.value = 4500;
+      f2.Q.value = 2;
+      const g2 = ctx.createGain();
+      g2.gain.setValueAtTime(0.3, ctx.currentTime);
+      g2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+      n2.connect(f2);
+      f2.connect(g2);
+      g2.connect(ctx.destination);
+      n2.start();
+      n2.stop(ctx.currentTime + 0.04);
+    }, 30);
+  } catch (e) {
+    // Audio not supported — silent fallback
+  }
+}
+
 export function ShotCheckItem({ shot, checked, onCheck, index }) {
+  const handleClick = () => {
+    if (!checked) playCameraClick();
+    onCheck();
+  };
+
   return (
     <div
-      onClick={() => onCheck()}
+      onClick={handleClick}
       style={{
         display: "flex",
         alignItems: "center",
