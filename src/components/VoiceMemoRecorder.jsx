@@ -7,6 +7,7 @@ export function VoiceMemoRecorder() {
   const mediaRecorder = useRef(null);
   const chunks = useRef([]);
   const timerRef = useRef(null);
+  const mimeRef = useRef("audio/webm");
 
   useEffect(() => {
     return () => {
@@ -15,11 +16,33 @@ export function VoiceMemoRecorder() {
     };
   }, [audioUrl]);
 
+  // Pick a MIME type the browser supports (Safari doesn't support webm)
+  const getMimeType = () => {
+    if (typeof MediaRecorder === "undefined") return null;
+    for (const type of ["audio/webm", "audio/mp4", "audio/ogg", ""]) {
+      if (type === "" || MediaRecorder.isTypeSupported(type)) return type;
+    }
+    return "";
+  };
+
+  const getFileExt = (mime) => {
+    if (mime.includes("mp4")) return "m4a";
+    if (mime.includes("ogg")) return "ogg";
+    return "webm";
+  };
+
   const startRecording = async () => {
+    if (!window.isSecureContext) {
+      alert("Voice memos require HTTPS. Please access this page over HTTPS.");
+      return;
+    }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
+      const mimeType = getMimeType();
+      const options = mimeType ? { mimeType } : {};
+      const recorder = new MediaRecorder(stream, options);
       mediaRecorder.current = recorder;
+      mimeRef.current = recorder.mimeType || mimeType || "audio/webm";
       chunks.current = [];
 
       recorder.ondataavailable = (e) => {
@@ -28,7 +51,7 @@ export function VoiceMemoRecorder() {
 
       recorder.onstop = () => {
         stream.getTracks().forEach((t) => t.stop());
-        const blob = new Blob(chunks.current, { type: "audio/webm" });
+        const blob = new Blob(chunks.current, { type: mimeRef.current });
         setAudioUrl(URL.createObjectURL(blob));
         setState("done");
       };
@@ -48,7 +71,7 @@ export function VoiceMemoRecorder() {
         });
       }, 1000);
     } catch (e) {
-      alert("Microphone access is required for voice memos.");
+      alert("Microphone access is required for voice memos. Please allow microphone permissions and try again.");
     }
   };
 
@@ -68,7 +91,7 @@ export function VoiceMemoRecorder() {
     if (!audioUrl) return;
     const a = document.createElement("a");
     a.href = audioUrl;
-    a.download = `voice-memo-${new Date().toISOString().slice(0, 10)}.webm`;
+    a.download = `voice-memo-${new Date().toISOString().slice(0, 10)}.${getFileExt(mimeRef.current)}`;
     a.click();
   };
 
