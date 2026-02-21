@@ -14,7 +14,7 @@ export function ShotIdeasPanel({ ideas, onSelect }) {
           fontSize: "0.7rem", fontWeight: 700, color: "#C9A961",
           textTransform: "uppercase", letterSpacing: "0.1em",
           display: "flex", alignItems: "center", gap: 6,
-          padding: "4px 0",
+          padding: "10px 0",
         }}
       >
         {"\u{1F4A1}"} B-Roll Ideas

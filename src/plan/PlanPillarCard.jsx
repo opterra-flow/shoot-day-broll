@@ -8,12 +8,13 @@ export function PlanPillarCard({ pillar, notes, setNotes, selectedHooks, onOpenH
 
   return (
     <div style={{
-      background: "#fff", borderRadius: 16, overflow: "hidden",
+      background: "#fff", borderRadius: 16,
       border: "1px solid #e8e8e8", boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
     }}>
       <div onClick={() => setExpanded(!expanded)} style={{
         padding: "16px 20px", cursor: "pointer",
         display: "flex", alignItems: "center", justifyContent: "space-between",
+        borderRadius: expanded ? "16px 16px 0 0" : 16,
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ fontSize: "1.6rem" }}>{pillar.emoji}</span>
@@ -28,7 +29,7 @@ export function PlanPillarCard({ pillar, notes, setNotes, selectedHooks, onOpenH
         }}>{"\u25BE"}</div>
       </div>
       {expanded && (
-        <div style={{ padding: "0 20px 20px" }}>
+        <div style={{ padding: "0 20px 20px", borderRadius: "0 0 16px 16px" }}>
           <p style={{
             fontSize: "0.85rem", color: "#555", lineHeight: 1.5,
             margin: "0 0 16px", fontStyle: "italic",
