@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { PILLARS } from "./data/pillars";
-import { playShutter } from "./utils/audio";
 import { saveSession, loadSession, clearSession } from "./utils/storage";
 import { QuoteView } from "./views/QuoteView";
 import { HomeView } from "./views/HomeView";
@@ -59,7 +58,6 @@ export default function ShootDayApp() {
       if (current.includes(shotIndex)) {
         return { ...prev, [pillarId]: current.filter((i) => i !== shotIndex) };
       }
-      playShutter();
       return { ...prev, [pillarId]: [...current, shotIndex] };
     });
   }, []);
