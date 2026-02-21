@@ -1,6 +1,6 @@
 import { ShotCheckItem } from "./ShotCheckItem";
 
-export function ActivePillarView({ pillar, checkedShots, onCheckShot, notes, setNotes, onComplete, allChecked, isCompleted }) {
+export function ActivePillarView({ pillar, checkedShots, onCheckShot, notes, setNotes, onComplete, onSkip, isLastUncompleted, allChecked, isCompleted }) {
   return (
     <div style={{
       background: pillar.bgColor,
@@ -87,24 +87,43 @@ export function ActivePillarView({ pillar, checkedShots, onCheckShot, notes, set
           textAlign: "center", letterSpacing: "0.02em",
         }}>{"\u2713"} {pillar.name} Complete</div>
       ) : (
-        <button
-          onClick={onComplete}
-          disabled={!allChecked}
-          style={{
-            width: "100%",
-            padding: "16px",
-            background: allChecked ? pillar.color : "#e0e0e0",
-            color: allChecked ? "#1A3A2F" : "#999",
-            border: "none",
-            fontWeight: 800,
-            fontSize: "0.9rem",
-            cursor: allChecked ? "pointer" : "not-allowed",
-            letterSpacing: "0.02em",
-            transition: "all 0.2s",
-          }}
-        >
-          {allChecked ? `\u2713 Mark ${pillar.name} Complete` : `Capture all 3 shots to continue`}
-        </button>
+        <>
+          <button
+            onClick={onComplete}
+            disabled={!allChecked}
+            style={{
+              width: "100%",
+              padding: "16px",
+              background: allChecked ? pillar.color : "#e0e0e0",
+              color: allChecked ? "#1A3A2F" : "#999",
+              border: "none",
+              fontWeight: 800,
+              fontSize: "0.9rem",
+              cursor: allChecked ? "pointer" : "not-allowed",
+              letterSpacing: "0.02em",
+              transition: "all 0.2s",
+            }}
+          >
+            {allChecked ? `\u2713 Mark ${pillar.name} Complete` : `Capture all 3 shots to continue`}
+          </button>
+          <button
+            onClick={onSkip}
+            style={{
+              width: "100%",
+              padding: "12px 16px",
+              background: "transparent",
+              color: "#999",
+              border: "none",
+              fontWeight: 600,
+              fontSize: "0.78rem",
+              cursor: "pointer",
+              letterSpacing: "0.02em",
+              transition: "color 0.2s",
+            }}
+          >
+            {isLastUncompleted ? "Skip to Wrap-Up \u203A" : "Skip to next \u203A"}
+          </button>
+        </>
       )}
     </div>
   );

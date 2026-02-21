@@ -47,6 +47,28 @@ export function PlanPillarCard({ pillar, notes, setNotes, selectedHooks, onOpenH
               </div>
             ))}
           </div>
+
+          {/* Brainstorm */}
+          <div style={{
+            background: "#F3E5F5", borderRadius: 10, padding: "12px 14px", marginBottom: 16,
+          }}>
+            <label style={{
+              fontSize: "0.7rem", fontWeight: 800, textTransform: "uppercase",
+              letterSpacing: "0.1em", color: "#7B1FA2", display: "block", marginBottom: 6,
+            }}>{"\u{1F9E0}"} Brainstorm</label>
+            <textarea
+              placeholder="Jot down your ideas..."
+              value={notes[`${pillar.id}-brainstorm`] || ""}
+              onChange={(e) => setNotes({ ...notes, [`${pillar.id}-brainstorm`]: e.target.value })}
+              style={{
+                width: "100%", minHeight: 60, padding: "8px 10px",
+                border: "1.5px solid #CE93D8", borderRadius: 8, fontSize: "0.85rem",
+                fontFamily: "inherit", resize: "vertical", background: "#fff",
+                boxSizing: "border-box", lineHeight: 1.5, outline: "none",
+              }}
+            />
+          </div>
+
           {/* Pillar-level hook */}
           {selectedHooks?.[pillar.id] ? (
             <div style={{
@@ -118,6 +140,25 @@ export function PlanPillarCard({ pillar, notes, setNotes, selectedHooks, onOpenH
                 border: "1.5px solid #FFF176", borderRadius: 8, fontSize: "0.85rem",
                 fontFamily: "inherit", resize: "vertical", background: "#fff",
                 boxSizing: "border-box",
+              }}
+            />
+          </div>
+
+          {/* Editing Notes & Effects */}
+          <div style={{ background: "#E3F2FD", borderRadius: 10, padding: "12px 14px", marginTop: 8 }}>
+            <label style={{
+              fontSize: "0.7rem", fontWeight: 800, textTransform: "uppercase",
+              letterSpacing: "0.1em", color: "#1565C0", display: "block", marginBottom: 4,
+            }}>{"\u{1F3AC}"} Editing Notes & Effects</label>
+            <textarea
+              placeholder="Transitions, color grading, text overlays, sound effects..."
+              value={notes[`${pillar.id}-editing`] || ""}
+              onChange={(e) => setNotes({ ...notes, [`${pillar.id}-editing`]: e.target.value })}
+              style={{
+                width: "100%", minHeight: 50, padding: "8px 10px",
+                border: "1.5px solid #90CAF9", borderRadius: 8, fontSize: "0.85rem",
+                fontFamily: "inherit", resize: "vertical", background: "#fff",
+                boxSizing: "border-box", lineHeight: 1.5, outline: "none",
               }}
             />
           </div>

@@ -1,8 +1,9 @@
 import { WRAP_CHECKLIST, WRAP_TOTAL } from "../data/wrapChecklist";
 import { TimerDisplay } from "../components/TimerDisplay";
 import { VoiceMemoRecorder } from "../components/VoiceMemoRecorder";
+import { MoodCheckIn } from "../components/MoodCheckIn";
 
-export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, setWrapChecked, onBack, onComplete }) {
+export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, setWrapChecked, shootMood, setShootMood, shootReflection, setShootReflection, onBack, onComplete }) {
   const checkedCount = wrapChecked.length;
   const allChecked = checkedCount === WRAP_TOTAL;
 
@@ -44,15 +45,18 @@ export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, s
               letterSpacing: "0.1em", textTransform: "uppercase",
             }}>{"\u2705"} Wrap-Up Checklist</span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <TimerDisplay seconds={elapsed} isRunning={isRunning} />
-            <button onClick={() => setIsRunning(!isRunning)} style={{
-              background: isRunning ? "#EF5350" : "#D4E157",
-              color: isRunning ? "#fff" : "#1A3A2F",
-              border: "none", borderRadius: 6, padding: "6px 12px",
-              fontSize: "0.7rem", fontWeight: 700, cursor: "pointer",
-            }}>{isRunning ? "Pause" : "Resume"}</button>
-          </div>
+        </div>
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "center",
+          gap: 12, marginBottom: 8,
+        }}>
+          <TimerDisplay seconds={elapsed} isRunning={isRunning} />
+          <button onClick={() => setIsRunning(!isRunning)} style={{
+            background: isRunning ? "#EF5350" : "#D4E157",
+            color: isRunning ? "#fff" : "#1A3A2F",
+            border: "none", borderRadius: 6, padding: "6px 14px",
+            fontSize: "0.7rem", fontWeight: 700, cursor: "pointer",
+          }}>{isRunning ? "Pause" : "Resume"}</button>
         </div>
 
         {/* Progress bar */}
@@ -133,6 +137,14 @@ export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, s
         <div style={{ marginBottom: 20 }}>
           <VoiceMemoRecorder />
         </div>
+
+        {/* Mood check-in */}
+        <MoodCheckIn
+          selectedMood={shootMood}
+          onSelectMood={setShootMood}
+          reflection={shootReflection}
+          onReflectionChange={setShootReflection}
+        />
 
         {/* Complete button */}
         <button

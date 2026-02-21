@@ -12,6 +12,7 @@ export function ShootView({
   notes, setNotes, selectedHooks,
   showConfetti, confettiDone,
   handleCheckShot, handleCompletePillar,
+  handleSkipPillar, isLastUncompleted,
   onSetActivePillar, resetAll, onNavigate,
 }) {
   const currentPillar = PILLARS[activePillarIndex];
@@ -151,6 +152,8 @@ export function ShootView({
             notes={notes}
             setNotes={setNotes}
             onComplete={() => handleCompletePillar(currentPillar.id)}
+            onSkip={() => handleSkipPillar(currentPillar.id)}
+            isLastUncompleted={isLastUncompleted}
             allChecked={currentChecked.length === currentPillar.shots.length}
             isCompleted={completedPillars.includes(currentPillar.id)}
           />

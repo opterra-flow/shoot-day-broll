@@ -4,7 +4,7 @@ import { formatTime } from "../utils/timer";
 import { Confetti } from "../components/Confetti";
 import { DownloadButtons } from "../components/DownloadButtons";
 
-export function CompleteView({ elapsed, pillarTimers, notes, selectedHooks, showConfetti, confettiDone, onReset }) {
+export function CompleteView({ elapsed, pillarTimers, notes, selectedHooks, showConfetti, confettiDone, onReset, onBack }) {
   return (
     <div style={{
       minHeight: "100vh",
@@ -76,6 +76,14 @@ export function CompleteView({ elapsed, pillarTimers, notes, selectedHooks, show
           }}>Save Your Storyboard</div>
           <DownloadButtons notes={notes} selectedHooks={selectedHooks} pillarTimers={pillarTimers} elapsed={elapsed} />
         </div>
+
+        <button onClick={onBack} style={{
+          width: "100%", padding: "14px 24px",
+          background: "rgba(255,255,255,0.1)", color: "#A5D6A7",
+          border: "1.5px solid rgba(165,214,167,0.3)", borderRadius: 12,
+          fontWeight: 700, fontSize: "0.9rem", cursor: "pointer",
+          marginBottom: 10,
+        }}>{"\u2039"} Back to Checklist</button>
 
         <button onClick={onReset} style={{
           width: "100%", padding: "16px 24px",

@@ -22,6 +22,8 @@ export default function ShootDayApp() {
   const [selectedHooks, setSelectedHooks] = useState({});
   const [pillarTimers, setPillarTimers] = useState({ magnet: 0, mirror: 0, bridge: 0 });
   const [wrapChecked, setWrapChecked] = useState([]);
+  const [shootMood, setShootMood] = useState(null);
+  const [shootReflection, setShootReflection] = useState({});
   const [showConfetti, setShowConfetti] = useState(false);
   const intervalRef = useRef(null);
 
@@ -32,8 +34,9 @@ export default function ShootDayApp() {
     saveSession({
       view, elapsed, pillarTimers, notes, activePillarIndex,
       checkedShots, completedPillars, selectedHooks, wrapChecked,
+      shootMood, shootReflection,
     });
-  }, [view, elapsed, pillarTimers, notes, activePillarIndex, checkedShots, completedPillars, selectedHooks, wrapChecked]);
+  }, [view, elapsed, pillarTimers, notes, activePillarIndex, checkedShots, completedPillars, selectedHooks, wrapChecked, shootMood, shootReflection]);
 
   // Timer
   useEffect(() => {
@@ -82,6 +85,23 @@ export default function ShootDayApp() {
     });
   }, []);
 
+  const handleSkipPillar = useCallback((pillarId) => {
+    setCompletedPillars((prev) => {
+      if (prev.includes(pillarId)) return prev;
+      const next = [...prev, pillarId];
+      if (next.length === PILLARS.length) {
+        setIsRunning(false);
+        setView("checklist");
+      } else {
+        const nextUncompleted = PILLARS.findIndex((p) => !next.includes(p.id));
+        if (nextUncompleted !== -1) {
+          setActivePillarIndex(nextUncompleted);
+        }
+      }
+      return next;
+    });
+  }, []);
+
   const confettiDone = useCallback(() => setShowConfetti(false), []);
 
   const resetAll = () => {
@@ -93,6 +113,8 @@ export default function ShootDayApp() {
     setCompletedPillars([]);
     setSelectedHooks({});
     setWrapChecked([]);
+    setShootMood(null);
+    setShootReflection({});
     setNotes({});
     clearSession();
     setView("quote");
@@ -110,6 +132,8 @@ export default function ShootDayApp() {
     setCompletedPillars(s.completedPillars || []);
     setSelectedHooks(s.selectedHooks || {});
     setWrapChecked(s.wrapChecked || []);
+    setShootMood(s.shootMood || null);
+    setShootReflection(s.shootReflection || {});
     // Always resume paused
     setIsRunning(false);
   };
@@ -149,7 +173,10 @@ export default function ShootDayApp() {
           onStartShoot={handleStartShoot}
         />
       );
-    case "shoot":
+    case "shoot": {
+      const uncompletedCount = PILLARS.filter((p) => !completedPillars.includes(p.id)).length;
+      const currentPillarId = PILLARS[activePillarIndex]?.id;
+      const isLastUncompleted = uncompletedCount === 1 && !completedPillars.includes(currentPillarId);
       return (
         <ShootView
           elapsed={elapsed}
@@ -166,11 +193,14 @@ export default function ShootDayApp() {
           confettiDone={confettiDone}
           handleCheckShot={handleCheckShot}
           handleCompletePillar={handleCompletePillar}
+          handleSkipPillar={handleSkipPillar}
+          isLastUncompleted={isLastUncompleted}
           onSetActivePillar={setActivePillarIndex}
           resetAll={resetAll}
           onNavigate={setView}
         />
       );
+    }
     case "checklist":
       return (
         <ChecklistView
@@ -179,6 +209,10 @@ export default function ShootDayApp() {
           setIsRunning={setIsRunning}
           wrapChecked={wrapChecked}
           setWrapChecked={setWrapChecked}
+          shootMood={shootMood}
+          setShootMood={setShootMood}
+          shootReflection={shootReflection}
+          setShootReflection={setShootReflection}
           onBack={() => setView("shoot")}
           onComplete={() => {
             setShowConfetti(true);
@@ -196,6 +230,7 @@ export default function ShootDayApp() {
           showConfetti={showConfetti}
           confettiDone={confettiDone}
           onReset={resetAll}
+          onBack={() => setView("checklist")}
         />
       );
     default:
