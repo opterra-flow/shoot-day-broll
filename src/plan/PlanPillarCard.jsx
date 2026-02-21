@@ -4,7 +4,7 @@ import { SHOT_IDEAS } from "../data/shotIdeas";
 
 export function PlanPillarCard({ pillar, notes, setNotes, selectedHooks, onOpenHookBank, onRemoveHook }) {
   const [expanded, setExpanded] = useState(false);
-  const ideas = SHOT_IDEAS[pillar.id] || [];
+  const getIdeas = (shotIndex) => SHOT_IDEAS[`${pillar.id}-${shotIndex}`] || [];
 
   return (
     <div style={{
@@ -101,7 +101,7 @@ export function PlanPillarCard({ pillar, notes, setNotes, selectedHooks, onOpenH
               shotIndex={i}
               notes={notes}
               setNotes={setNotes}
-              shotIdeas={ideas}
+              shotIdeas={getIdeas(i)}
             />
           ))}
           <div style={{ background: "#FFFDE7", borderRadius: 10, padding: "12px 14px", marginTop: 8 }}>
