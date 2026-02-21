@@ -133,6 +133,28 @@ export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, s
           </div>
         ))}
 
+        {/* Check all button */}
+        <button
+          onClick={() => {
+            if (allChecked) {
+              setWrapChecked([]);
+            } else {
+              setWrapChecked(Array.from({ length: WRAP_TOTAL }, (_, i) => i));
+            }
+          }}
+          style={{
+            width: "100%", padding: "12px",
+            background: allChecked ? "transparent" : "#E8F5E9",
+            border: allChecked ? "1.5px dashed #ccc" : "1.5px solid #81C784",
+            borderRadius: 10, marginBottom: 20,
+            color: allChecked ? "#999" : "#2E7D32",
+            fontWeight: 700, fontSize: "0.8rem",
+            cursor: "pointer", transition: "all 0.2s",
+          }}
+        >
+          {allChecked ? "Uncheck All" : "\u2705 Check All Boxes"}
+        </button>
+
         {/* Voice memo */}
         <div style={{ marginBottom: 20 }}>
           <VoiceMemoRecorder />
