@@ -1,5 +1,12 @@
 export const WRAP_CHECKLIST = [
   {
+    category: "B-Roll Review",
+    items: [
+      "Trim the clips",
+      "AirDrop or download all B-roll files into a Google Drive folder, separated by content type and labeled",
+    ],
+  },
+  {
     category: "Gear",
     items: [
       "Memory cards backed up",
@@ -12,15 +19,6 @@ export const WRAP_CHECKLIST = [
     items: [
       "Files labeled & organized",
       "Selects marked or flagged",
-      "AirDrop or download all B-roll files into a Google Drive folder, separated by content type and labeled",
-    ],
-  },
-  {
-    category: "B-Roll Review",
-    items: [
-      "Wide shots captured for each set",
-      "Medium shots captured for each set",
-      "Tight / detail shots captured for each set",
     ],
   },
   {
