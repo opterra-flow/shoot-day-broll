@@ -7,7 +7,7 @@ function playCameraClick() {
     clearTimeout(stopTimer);
     clickAudio.currentTime = 0;
     clickAudio.play();
-    stopTimer = setTimeout(() => { clickAudio.pause(); }, 500);
+    stopTimer = setTimeout(() => { clickAudio.pause(); }, 2500);
   } catch (e) {
     // Audio not supported — silent fallback
   }
