@@ -1,13 +1,13 @@
 import { generateStoryboardMarkdown, downloadMarkdown, printStoryboard } from "../utils/storyboardExport";
 
-export function DownloadButtons({ notes, selectedHooks, pillarTimers, elapsed, compact }) {
+export function DownloadButtons({ notes, selectedHooks, pillarTimers, elapsed, compact, hasVoiceMemo }) {
   const handleDownloadMd = () => {
-    const md = generateStoryboardMarkdown(notes, selectedHooks, pillarTimers, elapsed);
+    const md = generateStoryboardMarkdown(notes, selectedHooks, pillarTimers, elapsed, { hasVoiceMemo });
     downloadMarkdown(md);
   };
 
   const handlePrintPdf = () => {
-    const md = generateStoryboardMarkdown(notes, selectedHooks, pillarTimers, elapsed);
+    const md = generateStoryboardMarkdown(notes, selectedHooks, pillarTimers, elapsed, { hasVoiceMemo });
     printStoryboard(md);
   };
 

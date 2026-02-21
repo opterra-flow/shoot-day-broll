@@ -1,7 +1,7 @@
 import { PILLARS } from "../data/pillars";
 import { formatTime } from "./timer";
 
-export function generateStoryboardMarkdown(notes, selectedHooks, pillarTimers, elapsed) {
+export function generateStoryboardMarkdown(notes, selectedHooks, pillarTimers, elapsed, { hasVoiceMemo } = {}) {
   const date = new Date().toLocaleDateString("en-US", {
     weekday: "long", year: "numeric", month: "long", day: "numeric",
   });
@@ -40,6 +40,11 @@ export function generateStoryboardMarkdown(notes, selectedHooks, pillarTimers, e
     if (extra) {
       md += `**Additional Notes:** ${extra}\n\n`;
     }
+  }
+
+  if (hasVoiceMemo) {
+    md += `---\n\n`;
+    md += `## Voice Memo\nA voice memo was recorded for this session. Download it separately from the app.\n`;
   }
 
   return md;

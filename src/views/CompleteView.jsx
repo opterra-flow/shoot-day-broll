@@ -4,7 +4,19 @@ import { formatTime } from "../utils/timer";
 import { Confetti } from "../components/Confetti";
 import { DownloadButtons } from "../components/DownloadButtons";
 
-export function CompleteView({ elapsed, pillarTimers, notes, selectedHooks, showConfetti, confettiDone, onReset, onBack }) {
+export function CompleteView({ elapsed, pillarTimers, notes, selectedHooks, showConfetti, confettiDone, onReset, onBack, voiceMemoBlob }) {
+  const downloadVoiceMemo = () => {
+    if (!voiceMemoBlob) return;
+    const ext = voiceMemoBlob.type.includes("mp4") ? "m4a" : voiceMemoBlob.type.includes("ogg") ? "ogg" : "webm";
+    const url = URL.createObjectURL(voiceMemoBlob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `voice-memo-${new Date().toISOString().slice(0, 10)}.${ext}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
   return (
     <div style={{
       minHeight: "100vh",
@@ -74,7 +86,19 @@ export function CompleteView({ elapsed, pillarTimers, notes, selectedHooks, show
             fontSize: "0.7rem", fontWeight: 700, color: "#999",
             textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8,
           }}>Save Your Storyboard</div>
-          <DownloadButtons notes={notes} selectedHooks={selectedHooks} pillarTimers={pillarTimers} elapsed={elapsed} />
+          <DownloadButtons notes={notes} selectedHooks={selectedHooks} pillarTimers={pillarTimers} elapsed={elapsed} hasVoiceMemo={!!voiceMemoBlob} />
+          {voiceMemoBlob && (
+            <button onClick={downloadVoiceMemo} style={{
+              width: "100%", padding: "12px",
+              background: "#FFFDE7", color: "#1A3A2F",
+              border: "1.5px solid #FFE082", borderRadius: 10,
+              fontWeight: 700, fontSize: "0.85rem",
+              cursor: "pointer", marginTop: 8,
+              display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+            }}>
+              {"\u{1F399}\uFE0F"} Download Voice Memo
+            </button>
+          )}
         </div>
 
         <button onClick={onBack} style={{

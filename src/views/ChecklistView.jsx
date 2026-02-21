@@ -3,7 +3,7 @@ import { TimerDisplay } from "../components/TimerDisplay";
 import { VoiceMemoRecorder } from "../components/VoiceMemoRecorder";
 import { MoodCheckIn } from "../components/MoodCheckIn";
 
-export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, setWrapChecked, shootMood, setShootMood, shootReflection, setShootReflection, onBack, onComplete }) {
+export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, setWrapChecked, shootMood, setShootMood, shootReflection, setShootReflection, onBack, onComplete, onVoiceMemoReady }) {
   const checkedCount = wrapChecked.length;
   const allChecked = checkedCount === WRAP_TOTAL;
 
@@ -157,7 +157,7 @@ export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, s
 
         {/* Voice memo */}
         <div style={{ marginBottom: 20 }}>
-          <VoiceMemoRecorder />
+          <VoiceMemoRecorder onRecordingComplete={onVoiceMemoReady} />
         </div>
 
         {/* Mood check-in */}

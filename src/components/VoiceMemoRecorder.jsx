@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-export function VoiceMemoRecorder() {
+export function VoiceMemoRecorder({ onRecordingComplete }) {
   const [state, setState] = useState("idle"); // idle | recording | done
   const [seconds, setSeconds] = useState(0);
   const [audioUrl, setAudioUrl] = useState(null);
@@ -54,6 +54,7 @@ export function VoiceMemoRecorder() {
         const blob = new Blob(chunks.current, { type: mimeRef.current });
         setAudioUrl(URL.createObjectURL(blob));
         setState("done");
+        onRecordingComplete?.(blob);
       };
 
       recorder.start();
@@ -85,6 +86,7 @@ export function VoiceMemoRecorder() {
     setAudioUrl(null);
     setSeconds(0);
     setState("idle");
+    onRecordingComplete?.(null);
   };
 
   const downloadMemo = () => {

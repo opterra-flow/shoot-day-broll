@@ -26,6 +26,7 @@ export default function ShootDayApp() {
   const [shootMood, setShootMood] = useState(null);
   const [shootReflection, setShootReflection] = useState({});
   const [showConfetti, setShowConfetti] = useState(false);
+  const [voiceMemoBlob, setVoiceMemoBlob] = useState(null);
   const intervalRef = useRef(null);
 
   // Auto-save on state changes
@@ -117,6 +118,7 @@ export default function ShootDayApp() {
     setShootMood(null);
     setShootReflection({});
     setNotes({});
+    setVoiceMemoBlob(null);
     clearSession();
     setView("quote");
   };
@@ -226,6 +228,7 @@ export default function ShootDayApp() {
             setShowConfetti(true);
             setView("complete");
           }}
+          onVoiceMemoReady={setVoiceMemoBlob}
         />
       );
     case "complete":
@@ -239,6 +242,7 @@ export default function ShootDayApp() {
           confettiDone={confettiDone}
           onReset={resetAll}
           onBack={() => setView("checklist")}
+          voiceMemoBlob={voiceMemoBlob}
         />
       );
     default:
