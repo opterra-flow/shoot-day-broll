@@ -39,7 +39,7 @@ export function ShotIdeasPanel({ ideas, onSelect }) {
           {ideas.map((idea, i) => (
             <button
               key={i}
-              onClick={() => onSelect(idea)}
+              onClick={() => { onSelect(idea); setExpanded(false); }}
               style={{
                 background: "#FFF8E1",
                 border: "1px solid #FFE082",

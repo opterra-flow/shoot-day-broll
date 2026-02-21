@@ -12,7 +12,7 @@ export function StoryboardRecap({ notes, selectedHooks, currentPillarId }) {
   const hasAnyContent = PILLARS.some((p) =>
     p.shots.some((_, i) => notes[`${p.id}-${i}-concept`]) ||
     notes[`${p.id}-extra`] ||
-    p.shots.some((_, i) => selectedHooks?.[`${p.id}-${i}`])
+    selectedHooks?.[p.id]
   );
 
   if (!hasAnyContent) return null;
@@ -49,7 +49,7 @@ export function StoryboardRecap({ notes, selectedHooks, currentPillarId }) {
           {pillarsToShow.map((pillar) => {
             const hasPillarContent = pillar.shots.some((_, i) => notes[`${pillar.id}-${i}-concept`]) ||
               notes[`${pillar.id}-extra`] ||
-              pillar.shots.some((_, i) => selectedHooks?.[`${pillar.id}-${i}`]);
+              selectedHooks?.[pillar.id];
 
             if (!hasPillarContent) return null;
 
@@ -62,10 +62,23 @@ export function StoryboardRecap({ notes, selectedHooks, currentPillarId }) {
                   <span style={{ fontWeight: 800, fontSize: "0.85rem", color: "#1A3A2F" }}>{pillar.name}</span>
                 </div>
 
+                {selectedHooks?.[pillar.id] && (
+                  <div style={{
+                    padding: "8px 12px", marginBottom: 6,
+                    background: "#F9FBE7", borderRadius: 8,
+                    borderLeft: "3px solid #D4E157",
+                  }}>
+                    <div style={{
+                      fontSize: "0.65rem", fontWeight: 700, color: "#9E9D24",
+                      textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4,
+                    }}>Hook</div>
+                    <div style={{ fontSize: "0.82rem", color: "#333", lineHeight: 1.4 }}>{selectedHooks[pillar.id]}</div>
+                  </div>
+                )}
+
                 {pillar.shots.map((shot, i) => {
                   const concept = notes[`${pillar.id}-${i}-concept`];
-                  const hook = selectedHooks?.[`${pillar.id}-${i}`];
-                  if (!concept && !hook) return null;
+                  if (!concept) return null;
 
                   return (
                     <div key={i} style={{
@@ -77,14 +90,7 @@ export function StoryboardRecap({ notes, selectedHooks, currentPillarId }) {
                         fontSize: "0.65rem", fontWeight: 700, color: pillar.darkColor,
                         textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4,
                       }}>{shot.angle}</div>
-                      {concept && (
-                        <div style={{ fontSize: "0.82rem", color: "#333", lineHeight: 1.4 }}>{concept}</div>
-                      )}
-                      {hook && (
-                        <div style={{ fontSize: "0.75rem", color: "#9E9D24", marginTop: 4, fontStyle: "italic" }}>
-                          Hook: {hook}
-                        </div>
-                      )}
+                      <div style={{ fontSize: "0.82rem", color: "#333", lineHeight: 1.4 }}>{concept}</div>
                     </div>
                   );
                 })}
