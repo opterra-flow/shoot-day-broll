@@ -12,6 +12,7 @@ export const WRAP_CHECKLIST = [
     items: [
       "Files labeled & organized",
       "Selects marked or flagged",
+      "AirDrop or download all B-roll files into a Google Drive folder, separated by content type and labeled",
     ],
   },
   {
