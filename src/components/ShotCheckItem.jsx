@@ -3,7 +3,7 @@ clickAudio.preload = "auto";
 
 function playCameraClick() {
   try {
-    clickAudio.currentTime = 0;
+    clickAudio.currentTime = 1;
     clickAudio.play();
   } catch (e) {
     // Audio not supported — silent fallback

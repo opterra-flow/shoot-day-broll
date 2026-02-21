@@ -3,7 +3,7 @@ shutterAudio.preload = "auto";
 
 export function playShutter() {
   try {
-    shutterAudio.currentTime = 0;
+    shutterAudio.currentTime = 1;
     shutterAudio.play();
   } catch (e) {}
 }
