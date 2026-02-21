@@ -1,10 +1,13 @@
 const clickAudio = new Audio(import.meta.env.BASE_URL + "camera-click.mp4");
 clickAudio.preload = "auto";
 
+let stopTimer = null;
 function playCameraClick() {
   try {
+    clearTimeout(stopTimer);
     clickAudio.currentTime = 0;
     clickAudio.play();
+    stopTimer = setTimeout(() => { clickAudio.pause(); }, 500);
   } catch (e) {
     // Audio not supported — silent fallback
   }
