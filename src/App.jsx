@@ -181,6 +181,7 @@ export default function ShootDayApp() {
           setIsRunning={setIsRunning}
           wrapChecked={wrapChecked}
           setWrapChecked={setWrapChecked}
+          onBack={() => setView("shoot")}
           onComplete={() => {
             setShowConfetti(true);
             setView("complete");

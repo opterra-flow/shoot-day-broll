@@ -2,7 +2,7 @@ import { WRAP_CHECKLIST, WRAP_TOTAL } from "../data/wrapChecklist";
 import { TimerDisplay } from "../components/TimerDisplay";
 import { VoiceMemoRecorder } from "../components/VoiceMemoRecorder";
 
-export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, setWrapChecked, onComplete }) {
+export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, setWrapChecked, onBack, onComplete }) {
   const checkedCount = wrapChecked.length;
   const allChecked = checkedCount === WRAP_TOTAL;
 
@@ -33,10 +33,17 @@ export function ChecklistView({ elapsed, isRunning, setIsRunning, wrapChecked, s
           display: "flex", alignItems: "center", justifyContent: "space-between",
           marginBottom: 8,
         }}>
-          <span style={{
-            color: "#D4E157", fontWeight: 800, fontSize: "0.8rem",
-            letterSpacing: "0.1em", textTransform: "uppercase",
-          }}>{"\u2705"} Wrap-Up Checklist</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <button onClick={onBack} style={{
+              background: "rgba(255,255,255,0.12)", border: "none", borderRadius: 6,
+              color: "#A5D6A7", fontSize: "0.85rem", fontWeight: 700,
+              padding: "4px 10px", cursor: "pointer",
+            }}>{"\u2039"} Back</button>
+            <span style={{
+              color: "#D4E157", fontWeight: 800, fontSize: "0.8rem",
+              letterSpacing: "0.1em", textTransform: "uppercase",
+            }}>{"\u2705"} Wrap-Up Checklist</span>
+          </div>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <TimerDisplay seconds={elapsed} isRunning={isRunning} />
             <button onClick={() => setIsRunning(!isRunning)} style={{
