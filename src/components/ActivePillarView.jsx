@@ -54,6 +54,29 @@ export function ActivePillarView({ pillar, checkedShots, onCheckShot, notes, set
             index={i}
           />
         ))}
+
+        {!isCompleted && (
+          <button
+            onClick={() => {
+              pillar.shots.forEach((_, i) => {
+                if (!checkedShots.includes(i)) onCheckShot(i);
+              });
+            }}
+            style={{
+              width: "100%", padding: "10px",
+              background: allChecked ? "transparent" : "#E8F5E9",
+              border: allChecked ? "1.5px dashed #ccc" : "1.5px solid #81C784",
+              borderRadius: 10, marginTop: 4,
+              color: allChecked ? "#999" : "#2E7D32",
+              fontWeight: 700, fontSize: "0.75rem",
+              cursor: allChecked ? "default" : "pointer",
+              transition: "all 0.2s",
+            }}
+            disabled={allChecked}
+          >
+            {allChecked ? "All shots checked" : "\u2705 Check All Shots"}
+          </button>
+        )}
       </div>
 
       {notes && (
